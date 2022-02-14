@@ -1,0 +1,26 @@
+<?xml version="1.0"?>
+<person>
+  <name>Leia Organa</name>
+  <height>150</height>
+  <mass>49</mass>
+  <hair_color>brown</hair_color>
+  <skin_color>light</skin_color>
+  <eye_color>brown</eye_color>
+  <birth_year>19BBY</birth_year>
+  <gender>female</gender>
+  <homeworld>http://swapi.dev/api/planets/2/</homeworld>
+  <films>
+    <film>http://swapi.dev/api/films/1/</film>
+    <film>http://swapi.dev/api/films/2/</film>
+    <film>http://swapi.dev/api/films/3/</film>
+    <film>http://swapi.dev/api/films/6/</film>
+  </films>
+  <species />
+  <vehicles>
+    <vehicle>http://swapi.dev/api/vehicles/30/</vehicle>
+  </vehicles>
+  <starships />
+  <created>2014-12-10T15:20:09.791000Z</created>
+  <edited>2014-12-20T21:17:50.315000Z</edited>
+  <url>http://swapi.dev/api/people/5/</url>
+</person>
