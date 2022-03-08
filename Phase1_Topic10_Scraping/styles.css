@@ -1,0 +1,27 @@
+body {
+    background-color: white;
+  }
+h1 {
+
+    text-align: center ;
+}
+
+  
+  div.milton-excerpt {
+
+    font-style: italic;
+    margin-left: auto;
+    margin-right: auto;
+    width: 25em;
+
+  }
+  span.classic_quote {
+    color: red;
+    
+  }
+
+#blake_image {
+    
+    text-align: center;
+
+}
