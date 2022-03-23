@@ -1,0 +1,176 @@
+\documentclass{beamer}
+\usetheme{Warsaw}
+\usepackage{caption}
+\usepackage{tikz}
+\usepackage{adjustbox}
+\usetikzlibrary{arrows.meta, calc, quotes, tikzmark}
+\usetikzlibrary{shapes.geometric, arrows, chains, positioning}
+
+\setbeamerfont{caption}{series=\normalfont,size=\fontsize{7}{9}} 
+
+
+\title[Flatiron Lesson 1]{Multivariable Linear Regression} 
+\subtitle{A case study}
+
+\author{Praveen Gowtham} % Your name
+
+
+\date{} % Date, can be changed to a custom date
+
+
+\begin{document}
+
+% Define block styles
+\tikzstyle{decision} = [diamond, draw, fill=blue!20, 
+text width=4.5em, text badly centered, node distance=3cm, inner sep=0pt]
+\tikzstyle{block} = [rectangle, draw, fill=blue!20, 
+text width=5em, text centered, rounded corners, minimum height=4em]
+\tikzstyle{line} = [draw, -latex']
+\tikzstyle{cloud} = [draw, ellipse,fill=red!20, node distance=3cm,
+minimum height=2em]
+	
+	\begin{frame}
+		\titlepage % Print the title page as the first slide
+	\end{frame}
+\begin{frame}{A question from the king}
+		\begin{columns}
+		\begin{column}{0.5\textwidth}
+			\begin{itemize}
+				\item His munificence wishes to know the average life expectancy of his subjects and factors involved.
+				\item Zamunda's health ministry has historically not kept a good record of many things.
+			\end{itemize}
+
+		\end{column}	
+		\begin{column}{0.5\textwidth}
+			\begin{figure}
+				\includegraphics[scale=0.25]{jaffe_joffer}
+				\caption{His royal excellency Jaffe Joffer, king of Zamunda (long may he reign)}
+			\end{figure}
+			\begin{figure}
+			\includegraphics[scale=0.32]{zamundamap}
+			\caption{Map of the border of Zamunda}
+		\end{figure}
+		\end{column}
+		
+	\end{columns}	
+
+\end{frame}
+\begin{frame}{Acquired data}
+	Health data sampled from local hospitals. Socioeconomic data borrowed from other agencies.
+	
+	\begin{block}{Data + definitions}
+		\begin{adjustbox}{max totalsize={.9\textwidth}{.7\textheight},center}
+			
+			\begin{tabular}{|c|c|c|}
+				\hline
+				\textbf{Measurement} &  \textbf{Value} & \textbf{Definition} \\
+				\hline
+				Alcohol & 6.45 & Consumption (L) / capita \\
+				\hline
+				Heptatitis B & 93.0 & Immunization coverage  \\
+				\hline
+				Measles & 6 & Cases/1000 \\
+				\hline
+				BMI & 33.2 & Index Value  \\
+				\hline
+				Polio & 96 & Immunization Coverage \\
+				\hline
+				Total expenditure & 4.93 & \% Gov. expend. on health  \\
+				\hline
+				HIV/AIDS & 14.4 & Deaths / 1000 births  \\
+				\hline
+				GDP & 5374 & per capita (USD)   \\
+				\hline
+				Population & 1884238 & Number  \\
+				\hline
+				Thinness 1-19 years & 9.6 &\% \\
+				\hline
+				Schooling & 11.9 & Num. of Years \\
+				\hline
+		
+				
+			\end{tabular}
+			
+		\end{adjustbox}
+	\end{block}
+	
+\end{frame}
+
+\begin{frame}{Acquired data}
+	Use World Health Organization (WHO) life expectancy data to estimate for Zamunda. Multivariable linear regression.
+	
+	\begin{block}{Data + definitions}
+		\begin{adjustbox}{max totalsize={.9\textwidth}{.7\textheight},center}
+			
+			\begin{tabular}{|c|c|c|}
+				\hline
+				\textbf{Measurement} &  \textbf{Value} & \textbf{Definition} \\
+				\hline
+				Alcohol & 6.45 & Consumption (L) / capita \\
+				\hline
+				Heptatitis B & 93.0 & Immunization coverage  \\
+				\hline
+				Measles & 6 & Cases/1000 \\
+				\hline
+				BMI & 33.2 & Index Value  \\
+				\hline
+				Polio & 96 & Immunization Coverage \\
+				\hline
+				Total expenditure & 4.93 & \% Gov. expend. on health  \\
+				\hline
+				HIV/AIDS & 14.4 & Deaths / 1000 births  \\
+				\hline
+				GDP & 5374 & per capita (USD)   \\
+				\hline
+				Population & 1884238 & Number  \\
+				\hline
+				Thinness 1-19 years & 9.6 &\% \\
+				\hline
+				Schooling & 11.9 & Num. of Years \\
+				\hline
+				
+				
+			\end{tabular}
+			
+		\end{adjustbox}
+	\end{block}
+	
+\end{frame}
+
+\begin{frame}{Multivariate Linear Models}
+	\begin{itemize}
+		\item Multivariable Linear Model: $$ Y = w_1x_1 + w_2x_2 + ... + w_0 + \epsilon $$
+		\item Example from last time: $$ Sales \approx w_{TV} TV + w_{Radio} Radio + w_0$$
+	\end{itemize}
+	\begin{figure}[H]
+		\begin{center}
+		\includegraphics[scale = 0.35]{sales_radioTV}
+		\end{center}
+	\end{figure}
+\end{frame}
+
+\begin{frame}{The challenge of multiple feature}
+
+		\begin{itemize} 
+		\item Multivariable model: $$ Y = w_1x_1 + w_2x_2 + ... w_nx_n + w_0 + \epsilon $$
+		\item Which coefficients should be included in the model to improve approximating the data? How to tell?
+		\item Can't visualize anymore.
+		\item p-value testing: which $w_i$ significantly different from 0?
+	\end{itemize}
+
+\end{frame}
+
+\begin{frame}{Highly correlated variables}
+	Correlation between features can cause problems: 
+	$$ Y = w_1x_1 + w_2x_2 + w_0$$
+	\begin{itemize}
+	
+		\item Suppose $x_1$ and $x_2$ are highly correlated. (e.g, $x_1 \approx 2 x_2$)
+		
+		$$ Y_0 - w_0 = \Big(w_1 + 2w_2\Big)x_1 $$
+		\item Makes the weights unstable/unreliable.
+		\item Makes weights very sensitive to training data (overfitting).
+	\end{itemize}
+\end{frame}
+
+\end{document}
