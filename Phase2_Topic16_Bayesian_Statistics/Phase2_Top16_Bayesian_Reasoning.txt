@@ -1,0 +1,980 @@
+{
+ "cells": [
+  {
+   "cell_type": "markdown",
+   "metadata": {
+    "slideshow": {
+     "slide_type": "slide"
+    }
+   },
+   "source": [
+    "# Bayes' Theorem Objectives\n",
+    "- Use Bayes' Theorem to Infer Charteristics\n",
+    "- Several Examples\n",
+    "- Gimme the moolah  Monte"
+   ]
+  },
+  {
+   "cell_type": "markdown",
+   "metadata": {
+    "slideshow": {
+     "slide_type": "slide"
+    }
+   },
+   "source": [
+    "# Remember the Frequentists: \n",
+    "**Frequentists** interpretation of probability: the limit of frequency after many, many trials.\n",
+    "\n",
+    "Basically, the Bayesians assign a probability to a hypothesis but Frequentists test a hypothesis and determine probability with repeated trials.\n",
+    "\n",
+    "Some days you're a Frequentist, other days you're a Bayesian."
+   ]
+  },
+  {
+   "cell_type": "markdown",
+   "metadata": {
+    "slideshow": {
+     "slide_type": "slide"
+    }
+   },
+   "source": [
+    "# Thomas Bayes: The Badass of Probability 😎\n",
+    "\n",
+    "- Bayesian inference calculates the probability of an outcome using prior knowledge or belief.\n",
+    "- Learn more https://mathshistory.st-andrews.ac.uk/Biographies/Bayes/\n",
+    "- Bayes did not publish his theory as he thought it was obvious\n",
+    "- Richard Price (friend of Mr. Badass) went through papers after Bayes' death to see if anything was worth publishing."
+   ]
+  },
+  {
+   "cell_type": "markdown",
+   "metadata": {
+    "slideshow": {
+     "slide_type": "slide"
+    }
+   },
+   "source": [
+    "## Sidebar: Bayes' Original Thought Experiment\n",
+    "\n",
+    "Good explanation & demo of Bayes' first thought experiment: https://www.youtube.com/watch?v=7GgLSnQ48os\n",
+    "\n"
+   ]
+  },
+  {
+   "cell_type": "markdown",
+   "metadata": {
+    "slideshow": {
+     "slide_type": "slide"
+    }
+   },
+   "source": [
+    "## Sidebar: Why C3P0 is Wrong & Han Solo is a Badass\n",
+    "\n",
+    "\"Never tell me the odds!\" https://www.countbayesie.com/blog/2015/2/18/hans-solo-and-bayesian-priors\n",
+    "\n",
+    "Han is a one great pilot, so he likely will get through the asteroid field even if others will fail (crash and blow-up)"
+   ]
+  },
+  {
+   "cell_type": "markdown",
+   "metadata": {
+    "slideshow": {
+     "slide_type": "slide"
+    }
+   },
+   "source": [
+    "# Bayes' Theorem\n",
+    "\n",
+    "$$P(A|B) = \\frac{P(B|A)}{P(B)}\\ P(A) $$\n",
+    "\n",
+    "\n",
+    "Each part (note, depending how you approach this, you might group different parts together):\n",
+    "\n",
+    "- $P(A)$: the probability of event A, aka. *prior*\n",
+    "- $P(A|B)$: *posterior*\n",
+    "- $P(B|A)$: *likelihood*\n",
+    "- $P(B)$: the probability of event B"
+   ]
+  },
+  {
+   "cell_type": "markdown",
+   "metadata": {
+    "slideshow": {
+     "slide_type": "slide"
+    }
+   },
+   "source": [
+    "## The Example: Fan of a Movie 🌙\n",
+    "\n",
+    "Based on my experience, I found about 1 in 5 people (or 20%) also are fans of the vampire-werewolf saga, Twilight. \n",
+    "\n",
+    "When I met my friend, Rory, they told me they just watched _The Twilight Saga: New Moon_ (the second movie) at a friend's house!\n",
+    "\n",
+    "There are two possible scenarios here:\n",
+    "\n",
+    "1. Rory is a fan and watched the beloved sequel to _Twilight_. I estimate that if you're a fan, the chances of you watching one the five awe-inspiring movies is about 60%. (It would be more, but we fans get busy.)\n",
+    "\n",
+    "2. Rory isn't a fan and watched the sequel because it was just on. I estimate that if you're not a fan, there's only a 5% chance of you watching one of the movies (about 10x less likely)."
+   ]
+  },
+  {
+   "cell_type": "markdown",
+   "metadata": {
+    "slideshow": {
+     "slide_type": "slide"
+    }
+   },
+   "source": [
+    "Let's define two events:\n",
+    "\n",
+    "* $A$ = 🌙 fan\n",
+    "* $B$ = watched 🌙\n",
+    "\n",
+    "Reviewing Bayes' Theorem, we get:"
+   ]
+  },
+  {
+   "cell_type": "markdown",
+   "metadata": {
+    "slideshow": {
+     "slide_type": "slide"
+    }
+   },
+   "source": [
+    "$P(A) = P(\\text{🌙 fan}) = 0.20$\n",
+    "\n",
+    "$P(B|A) = P(\\text{watched 🌙, given you are a 🌙 fan}) = 0.60$\n",
+    "\n",
+    "$P(B|\\neg A) = P(\\text{watched 🌙, given you are NOT a 🌙 fan}) = 0.05$\n",
+    "\n",
+    "$\\begin{aligned}\n",
+    "P(B) &= P(\\text{watched 🌙})  \\\\\n",
+    "     &= P(B|A)\\cdot P(A) + P(B|\\neg A)\\cdot P(\\neg A) \\\\\n",
+    "     &= 0.60\\cdot 0.20 + 0.05\\cdot 0.80 \\\\\n",
+    "     &= 0.16 \n",
+    "\\end{aligned}$"
+   ]
+  },
+  {
+   "cell_type": "markdown",
+   "metadata": {
+    "slideshow": {
+     "slide_type": "slide"
+    }
+   },
+   "source": [
+    "So we get that the chances of someone like Rory is a _Twilight_ fan is:\n",
+    "\n",
+    "$$\\begin{aligned}\n",
+    "P(A|B) &= P(\\text{🌙 fan, given you watched 🌙}) \\\\ \n",
+    "       &= \\frac{P(B|A)P(A)}{P(B)} \\\\\n",
+    "       &= \\frac{0.60 \\cdot 0.20}{0.16} \\\\\n",
+    "       &= 0.75\n",
+    "\\end{aligned}$$"
+   ]
+  },
+  {
+   "cell_type": "markdown",
+   "metadata": {
+    "slideshow": {
+     "slide_type": "fragment"
+    }
+   },
+   "source": [
+    "So there's a $75\\%$ chance Rory is a fan too!"
+   ]
+  },
+  {
+   "cell_type": "markdown",
+   "metadata": {
+    "slideshow": {
+     "slide_type": "slide"
+    }
+   },
+   "source": [
+    "## Visualizing Probabilities & Bayes"
+   ]
+  },
+  {
+   "cell_type": "markdown",
+   "metadata": {
+    "slideshow": {
+     "slide_type": "slide"
+    }
+   },
+   "source": [
+    "Imagine we have a population of $50$ people. We'd get:\n",
+    "\n",
+    "-  $0.2\\cdot 50 = 10$ are _Twilight_ fans\n",
+    "    - 4 haven't watched: 🌙\n",
+    "    - 6 have watched: 🧛\n",
+    "-  $0.8\\cdot 50 = 40$ are not _Twilight_ fans: \n",
+    "    - 38 haven't watched: 🙂\n",
+    "    - 2 have watched: 👁\n",
+    "\n",
+    "<pre>\n",
+    "\n",
+    "🧛🧛👁👁🙂🙂🙂🙂🙂🙂\n",
+    "🧛🧛🙂🙂🙂🙂🙂🙂🙂🙂\n",
+    "🧛🧛🙂🙂🙂🙂🙂🙂🙂🙂\n",
+    "🌙🌙🙂🙂🙂🙂🙂🙂🙂🙂\n",
+    "🌙🌙🙂🙂🙂🙂🙂🙂🙂🙂\n",
+    "\n",
+    "</pre>"
+   ]
+  },
+  {
+   "cell_type": "markdown",
+   "metadata": {
+    "slideshow": {
+     "slide_type": "slide"
+    }
+   },
+   "source": [
+    "But we only care about those who watched (🧛 & 👁). So given that Rory watched one of the movies, we only care about this subset:\n",
+    "\n",
+    "<pre>\n",
+    "\n",
+    "🧛🧛👁👁\n",
+    "🧛🧛\n",
+    "🧛🧛\n",
+    "\n",
+    "</pre>\n",
+    "\n",
+    "Thus there is a $6$ out of $8$ chance Rory also is a _Twilight_ fan or simply $75\\%$"
+   ]
+  },
+  {
+   "cell_type": "markdown",
+   "metadata": {
+    "slideshow": {
+     "slide_type": "slide"
+    }
+   },
+   "source": [
+    "# Bayes' Theorem Examples "
+   ]
+  },
+  {
+   "cell_type": "markdown",
+   "metadata": {
+    "slideshow": {
+     "slide_type": "fragment"
+    }
+   },
+   "source": [
+    "## Scenario: Diagnostic Testing 🤢\n",
+    "\n",
+    "Pretend we test positive for a rare disease. What are the chances that we actually have the disease?"
+   ]
+  },
+  {
+   "cell_type": "markdown",
+   "metadata": {
+    "slideshow": {
+     "slide_type": "fragment"
+    }
+   },
+   "source": [
+    "- The disease is rare: only 0.01% of the population has it\n",
+    "- The test will be correct 99% of the time, whether or not you have the disease "
+   ]
+  },
+  {
+   "cell_type": "markdown",
+   "metadata": {
+    "slideshow": {
+     "slide_type": "slide"
+    }
+   },
+   "source": [
+    "## Defining Events & Probabilities"
+   ]
+  },
+  {
+   "cell_type": "markdown",
+   "metadata": {
+    "slideshow": {
+     "slide_type": "fragment"
+    }
+   },
+   "source": [
+    "$A$ → I have the disease\n",
+    "\n",
+    "$B$ → I test positive\n",
+    "\n",
+    "----------\n",
+    "\n",
+    "$P(A) = P(\\text{have the disease}) = 0.0001$\n",
+    "\n",
+    "$P(B)$ = $P(\\text{test positive})$\n",
+    "\n",
+    "$P(A|B)$ = $P(\\text{having the disease given that test positive})$\n"
+   ]
+  },
+  {
+   "cell_type": "markdown",
+   "metadata": {
+    "slideshow": {
+     "slide_type": "slide"
+    }
+   },
+   "source": [
+    "## Use Bayes' Theorem"
+   ]
+  },
+  {
+   "cell_type": "markdown",
+   "metadata": {
+    "slideshow": {
+     "slide_type": "fragment"
+    }
+   },
+   "source": [
+    "$P(sick | positive) =  \\frac{P(positive | sick)\\ P(sick)}{P(positive)}$"
+   ]
+  },
+  {
+   "cell_type": "markdown",
+   "metadata": {
+    "slideshow": {
+     "slide_type": "fragment"
+    }
+   },
+   "source": [
+    "But we can be more specific by knowing the probability of testing positive for each case"
+   ]
+  },
+  {
+   "cell_type": "markdown",
+   "metadata": {
+    "slideshow": {
+     "slide_type": "fragment"
+    }
+   },
+   "source": [
+    "$P(positive) = P(sick)\\ P(positive | sick) + P(not\\ sick)\\ P(positive|not\\ sick)$"
+   ]
+  },
+  {
+   "cell_type": "markdown",
+   "metadata": {
+    "slideshow": {
+     "slide_type": "fragment"
+    }
+   },
+   "source": [
+    "This leads to our ultimate equation"
+   ]
+  },
+  {
+   "cell_type": "markdown",
+   "metadata": {
+    "slideshow": {
+     "slide_type": "fragment"
+    }
+   },
+   "source": [
+    "$P(sick | positive) =  \\frac{P(positive | sick)\\ P(sick)}{P(sick)\\ P(positive | sick) + P(not\\ sick)\\ P(positive|not\\ sick)}$"
+   ]
+  },
+  {
+   "cell_type": "markdown",
+   "metadata": {
+    "slideshow": {
+     "slide_type": "slide"
+    }
+   },
+   "source": [
+    "## Calculate Posterior Probability"
+   ]
+  },
+  {
+   "cell_type": "code",
+   "execution_count": 25,
+   "metadata": {
+    "ExecuteTime": {
+     "end_time": "2022-03-21T16:06:58.411362Z",
+     "start_time": "2022-03-21T16:06:58.403308Z"
+    },
+    "slideshow": {
+     "slide_type": "fragment"
+    }
+   },
+   "outputs": [
+    {
+     "data": {
+      "text/plain": [
+       "0.01009800000000001"
+      ]
+     },
+     "execution_count": 25,
+     "metadata": {},
+     "output_type": "execute_result"
+    }
+   ],
+   "source": [
+    "# probability of sick & healthy\n",
+    "p_sick = 0.0001\n",
+    "p_not_sick = 1 - p_sick\n",
+    "\n",
+    "# probability of test being correct (accuracy)\n",
+    "p_positive_sick = 0.99 \n",
+    "p_positive_not_sick = 1 - p_positive_sick\n",
+    "\n",
+    "# probability of positive test (whether or not you are sick)\n",
+    "p_positive = p_sick*p_positive_sick + p_not_sick*p_positive_not_sick\n",
+    "p_positive"
+   ]
+  },
+  {
+   "cell_type": "markdown",
+   "metadata": {
+    "slideshow": {
+     "slide_type": "slide"
+    }
+   },
+   "source": [
+    "Next, we're defining the parts for Bayes' Theorem"
+   ]
+  },
+  {
+   "cell_type": "code",
+   "execution_count": 38,
+   "metadata": {
+    "ExecuteTime": {
+     "end_time": "2022-03-21T17:52:39.411804Z",
+     "start_time": "2022-03-21T17:52:39.407349Z"
+    },
+    "slideshow": {
+     "slide_type": "fragment"
+    }
+   },
+   "outputs": [],
+   "source": [
+    "# belief before hand\n",
+    "sick_prior = p_sick  \n",
+    "\n",
+    "# how likely are we to test positive and be sick\n",
+    "pos_sick_likelihood = p_positive_sick \n",
+    "®\n",
+    "# Add normalization\n",
+    "pos_norm = p_positive"
+   ]
+  },
+  {
+   "cell_type": "markdown",
+   "metadata": {
+    "slideshow": {
+     "slide_type": "slide"
+    }
+   },
+   "source": [
+    "Finally, let's calculate the probability of the evidence itself:\n",
+    "\n",
+    "There are three salient hypotheses to consider:\n",
+    "\n",
+    "$h_1$: The prize is behind Door #1.<br/>\n",
+    "$h_2$: The prize is behind Door #2.<br/>\n",
+    "$h_3$: The prize is behind Door #3.\n",
+    "And our evidence is:\n",
+    "\n",
+    "$e$: Hall shows you that the prize is not behind Door #2.\n",
+    "We can calculate the probability as follows:\n",
+    "\n",
+    "$P(e) = P(e | h_1)\\times P(h_1) + P(e | h_2)\\times P(h_2) + P(e | h_3)\\times P(h_3)$.\n",
+    "\n",
+    "We've already made the calculation for the first term:\n",
+    "\n",
+    "$P(e | h_1)\\times P(h_1) = \\frac{1}{2}\\times\\frac{1}{3} = \\frac{1}{6}$.\n",
+    "\n",
+    "Now:\n",
+    "\n",
+    "The probability that Hall would show you Door #2, given that the prize is behind Door #2, is zero. (This is by the rules of the game.)\n",
+    "\n",
+    "The probability that Hall would show you Door #2, given that the prize is behind Door #3, is one. (Here Hall's hand would be forced, since he can, by the rules, show you neither the door that you chose (#1) nor the door with the prize (#3).)\n",
+    "\n",
+    "So we have:\n",
+    "\n",
+    "$P(e) = \\frac{1}{2}\\times\\frac{1}{3} + (0)\\times\\frac{1}{3} + (1)\\times\\frac{1}{3} = \\frac{1}{2}$.\n",
+    "\n",
+    "We are finally in a position to calculate the posterior! We have:\n",
+    "\n",
+    "$\\large P(h_1 | e) = \\frac{P(e | h_1)\\times P(h)}{P(e)} = \\frac{1 / 6}{1 / 2} = \\frac{1}{3}$.\n",
+    "\n",
+    "That is, our updated probability that the prize is behind Door #1 is just the same as the prior. It's still just $\\frac{1}{3}$"
+   ]
+  },
+  {
+   "cell_type": "code",
+   "execution_count": 27,
+   "metadata": {
+    "ExecuteTime": {
+     "end_time": "2022-03-21T16:13:07.823304Z",
+     "start_time": "2022-03-21T16:13:07.818979Z"
+    },
+    "slideshow": {
+     "slide_type": "fragment"
+    }
+   },
+   "outputs": [],
+   "source": [
+    "#finish the find_posterior function \n",
+    "def find_posterior(prior, likelihood, norm):   \n",
+    "    return (likelihood * prior)/ norm®"
+   ]
+  },
+  {
+   "cell_type": "markdown",
+   "metadata": {
+    "slideshow": {
+     "slide_type": "slide"
+    }
+   },
+   "source": [
+    "Lastly, we use the function to calculate our result"
+   ]
+  },
+  {
+   "cell_type": "code",
+   "execution_count": 28,
+   "metadata": {
+    "ExecuteTime": {
+     "end_time": "2022-03-21T16:13:15.487261Z",
+     "start_time": "2022-03-21T16:13:15.481731Z"
+    },
+    "slideshow": {
+     "slide_type": "fragment"
+    }
+   },
+   "outputs": [
+    {
+     "name": "stdout",
+     "output_type": "stream",
+     "text": [
+      "You have a 0.98% chance of actually being sick\n"
+     ]
+    }
+   ],
+   "source": [
+    "prob_youre_sick = find_posterior(sick_prior, pos_sick_likelihood, pos_norm)\n",
+    "\n",
+    "print(f'You have a {prob_youre_sick*100:.2f}% chance of actually being sick')"
+   ]
+  },
+  {
+   "cell_type": "markdown",
+   "metadata": {
+    "slideshow": {
+     "slide_type": "slide"
+    }
+   },
+   "source": [
+    "## The Monty Hall Problem \n",
+    "Bayesian reasoning applies naturally and neatly to the famous Monty Hall Problem. - [video](https://www.khanacademy.org/partner-content/wi-phi/wiphi-metaphysics-epistemology/probability-philosophy/v/the-monty-hall-problem)\n",
+    "\n",
+    "- https://www.youtube.com/watch?v=cXqDIFUB7YU"
+   ]
+  },
+  {
+   "cell_type": "markdown",
+   "metadata": {
+    "slideshow": {
+     "slide_type": "subslide"
+    }
+   },
+   "source": [
+    "### Posterior Probability that the Prize Is Behind Your Door\n",
+    "Let's calculate the posterior probability that the prize is behind Door #1, given the evidence that Hall shows you that it is not behind Door #2:\n",
+    "\n",
+    "What is the prior probability that the prize is behind Door #1?"
+   ]
+  },
+  {
+   "cell_type": "code",
+   "execution_count": 39,
+   "metadata": {
+    "ExecuteTime": {
+     "end_time": "2022-03-21T18:02:48.068124Z",
+     "start_time": "2022-03-21T18:02:48.062438Z"
+    },
+    "slideshow": {
+     "slide_type": "fragment"
+    }
+   },
+   "outputs": [
+    {
+     "data": {
+      "text/plain": [
+       "0.3333333333333333"
+      ]
+     },
+     "execution_count": 39,
+     "metadata": {},
+     "output_type": "execute_result"
+    }
+   ],
+   "source": [
+    "prior_1 = 1/3\n",
+    "prior_1"
+   ]
+  },
+  {
+   "cell_type": "markdown",
+   "metadata": {
+    "slideshow": {
+     "slide_type": "slide"
+    }
+   },
+   "source": [
+    "Now let's consider the likelihood of the evidence: What is the probability that Hall would show you that it is not behind Door #2, given the hypothesis that the prize is behind Door #1?"
+   ]
+  },
+  {
+   "cell_type": "code",
+   "execution_count": 30,
+   "metadata": {
+    "ExecuteTime": {
+     "end_time": "2022-03-21T16:31:44.528644Z",
+     "start_time": "2022-03-21T16:31:44.522839Z"
+    },
+    "slideshow": {
+     "slide_type": "fragment"
+    }
+   },
+   "outputs": [
+    {
+     "data": {
+      "text/plain": [
+       "0.5"
+      ]
+     },
+     "execution_count": 30,
+     "metadata": {},
+     "output_type": "execute_result"
+    }
+   ],
+   "source": [
+    "likelihood_1 = 1/2\n",
+    "likelihood_1"
+   ]
+  },
+  {
+   "cell_type": "markdown",
+   "metadata": {
+    "slideshow": {
+     "slide_type": "slide"
+    }
+   },
+   "source": [
+    "Finally, let's calculate the probability of the evidence itself:\n",
+    "\n",
+    "There are three salient hypotheses to consider:\n",
+    "\n",
+    "$h_1$: The prize is behind Door #1  $P(h_1) = \\frac{1}{3}$.<br/>\n",
+    "$h_2$: The prize is behind Door #2  $P(h_2) = \\frac{1}{3}$.<br/>\n",
+    "$h_3$: The prize is behind Door #3  $P(h_3) = \\frac{1}{3}$.<br>\n",
+    "\n",
+    "\n",
+    "And our evidence is:\n",
+    "\n",
+    "$e$: Hall shows you that the prize is not behind Door #2.\n",
+    "We can calculate the probability as follows:\n",
+    "\n",
+    "$P(e) = P(e | h_1)\\times P(h_1) + P(e | h_2)\\times P(h_2) + P(e | h_3)\\times P(h_3)$.\n",
+    "\n",
+    "We've already made the calculation for the first term:\n",
+    "\n",
+    "$P(e | h_1)\\times P(h_1) = \\frac{1}{2}\\times\\frac{1}{3} = \\frac{1}{6}$.\n",
+    "\n"
+   ]
+  },
+  {
+   "cell_type": "markdown",
+   "metadata": {
+    "slideshow": {
+     "slide_type": "slide"
+    }
+   },
+   "source": [
+    "Now:\n",
+    "\n",
+    "The probability that Hall would show you Door #2, given that the prize is behind Door #2, is zero. (This is by the rules of the game.)\n",
+    "\n",
+    "The probability that Hall would show you Door #2, given that the prize is behind Door #3, is one. (Here Hall's hand would be forced, since he can, by the rules, show you neither the door that you chose (#1) nor the door with the prize (#3).)\n",
+    "\n",
+    "So we have:\n",
+    "\n",
+    "$P(e) = \\frac{1}{2}\\times\\frac{1}{3} + (0)\\times\\frac{1}{3} + (1)\\times\\frac{1}{3} = \\frac{1}{2}$.\n",
+    "\n",
+    "We are finally in a position to calculate the posterior! We have:\n",
+    "\n",
+    "$\\large P(h_1 | e) = \\frac{P(e | h_1)\\times P(h_1)}{P(e)} = \\frac{1 / 6}{1 / 2} = \\frac{1}{3}$.\n",
+    "\n",
+    "That is, our updated probability that the prize is behind Door #1 is just the same as the prior. It's still just $\\frac{1}{3}$"
+   ]
+  },
+  {
+   "cell_type": "markdown",
+   "metadata": {
+    "slideshow": {
+     "slide_type": "slide"
+    }
+   },
+   "source": [
+    "The posterior probability that the prize is behind Door #3, given the evidence that Hall has shown you what's behind Door #2, ought to work out to $\\frac{2}{3}$. Let's verify this:\n",
+    "\n",
+    "What is the prior probability that the prize is behind Door #3?"
+   ]
+  },
+  {
+   "cell_type": "code",
+   "execution_count": 10,
+   "metadata": {
+    "slideshow": {
+     "slide_type": "fragment"
+    }
+   },
+   "outputs": [
+    {
+     "data": {
+      "text/plain": [
+       "0.3333333333333333"
+      ]
+     },
+     "execution_count": 10,
+     "metadata": {},
+     "output_type": "execute_result"
+    }
+   ],
+   "source": [
+    "prior_1 "
+   ]
+  },
+  {
+   "cell_type": "markdown",
+   "metadata": {
+    "slideshow": {
+     "slide_type": "fragment"
+    }
+   },
+   "source": [
+    "Now the likelihood: What's the probability that Hall would show you Door #2, given that the prize is behind Door #3?"
+   ]
+  },
+  {
+   "cell_type": "code",
+   "execution_count": 11,
+   "metadata": {
+    "slideshow": {
+     "slide_type": "fragment"
+    }
+   },
+   "outputs": [
+    {
+     "data": {
+      "text/plain": [
+       "0.5"
+      ]
+     },
+     "execution_count": 11,
+     "metadata": {},
+     "output_type": "execute_result"
+    }
+   ],
+   "source": [
+    "likelihood_1"
+   ]
+  },
+  {
+   "cell_type": "markdown",
+   "metadata": {
+    "slideshow": {
+     "slide_type": "slide"
+    }
+   },
+   "source": [
+    "We've already made our calculation of the evidence. From before we had:\n",
+    "\n",
+    "$P(e) = \\frac{1}{2}\\times\\frac{1}{3} + (0)\\times\\frac{1}{3} + (1)\\times\\frac{1}{3} = \\frac{1}{2}$.\n",
+    "\n",
+    "So now we are in a position to calculate the posterior probability that the prize is behind Door #3. We have:\n",
+    "\n",
+    "$\\large P(h_3 | e) = \\frac{P(e | h_3)\\times P(h1)}{P(e)} = \\frac{1 / 3}{1 / 2} = \\frac{2}{3}$.\n",
+    "\n",
+    "Given that Hall shows us what's behind Door #2, we should now update our degree of belief that the prize is behind Door #3 to $\\frac{2}{3}$!"
+   ]
+  },
+  {
+   "cell_type": "markdown",
+   "metadata": {
+    "slideshow": {
+     "slide_type": "slide"
+    }
+   },
+   "source": [
+    "# Level Up: Harder Exercise"
+   ]
+  },
+  {
+   "cell_type": "markdown",
+   "metadata": {
+    "slideshow": {
+     "slide_type": "fragment"
+    }
+   },
+   "source": [
+    "## Two Tests\n",
+    "\n",
+    "In the original Diagnostic Testing scenario above, what are the chances that we have the disease if we change the accuracy of the test?\n"
+   ]
+  },
+  {
+   "cell_type": "code",
+   "execution_count": 43,
+   "metadata": {
+    "ExecuteTime": {
+     "end_time": "2022-03-21T18:13:03.436723Z",
+     "start_time": "2022-03-21T18:13:03.428790Z"
+    },
+    "slideshow": {
+     "slide_type": "slide"
+    }
+   },
+   "outputs": [
+    {
+     "name": "stdout",
+     "output_type": "stream",
+     "text": [
+      "You have a 90.91% chance of actually being sick\n"
+     ]
+    }
+   ],
+   "source": [
+    "# probability of sick & healthy\n",
+    "p_sick = 0.0001\n",
+    "p_not_sick = 1 - p_sick\n",
+    "\n",
+    "# probability of test being correct (accuracy)\n",
+    "p_positive_sick = 0.99999\n",
+    "p_positive_not_sick = 1 - p_positive_sick\n",
+    "\n",
+    "# probability of positive test (whether or not you are sick)\n",
+    "p_positive = p_sick*p_positive_sick + p_not_sick*p_positive_not_sick\n",
+    "p_positive\n",
+    "\n",
+    "# belief before hand\n",
+    "sick_prior = p_sick\n",
+    "\n",
+    "# how likely are we to test positive and be sick\n",
+    "pos_sick_likelihood = p_positive_sick \n",
+    "\n",
+    "# Add normalization\n",
+    "pos_norm = p_positive\n",
+    "\n",
+    "#finish the find_posterior function \n",
+    "def find_posterior(prior, likelihood, norm):\n",
+    "    return (likelihood * prior)/ norm\n",
+    "\n",
+    "\n",
+    "prob_youre_sick = find_posterior(sick_prior, pos_sick_likelihood, pos_norm)\n",
+    "\n",
+    "print(f'You have a {prob_youre_sick*100:.2f}% chance of actually being sick')"
+   ]
+  },
+  {
+   "cell_type": "code",
+   "execution_count": 47,
+   "metadata": {
+    "ExecuteTime": {
+     "end_time": "2022-03-21T18:15:58.672433Z",
+     "start_time": "2022-03-21T18:15:58.665539Z"
+    },
+    "slideshow": {
+     "slide_type": "slide"
+    }
+   },
+   "outputs": [
+    {
+     "name": "stdout",
+     "output_type": "stream",
+     "text": [
+      "You have a 99.01% chance of actually being sick\n"
+     ]
+    }
+   ],
+   "source": [
+    "# probability of sick & healthy\n",
+    "p_sick = 0.0001\n",
+    "p_not_sick = 1 - p_sick\n",
+    "\n",
+    "# probability of 2 tests being correct\n",
+    "p_positive_sick = 0.999\n",
+    "p_2positive_sick = p_positive_sick**2\n",
+    "\n",
+    "# probability of 2 tests being incorrect\n",
+    "p_positive_not_sick = 1 - p_positive_sick\n",
+    "p_2positive_not_sick = p_positive_not_sick**2\n",
+    "\n",
+    "\n",
+    "# probability of positive test (whether or not you are sick)\n",
+    "p_2positive = p_sick*p_2positive_sick + p_not_sick*p_2positive_not_sick\n",
+    "\n",
+    "# belief before hand\n",
+    "sick_prior = p_sick\n",
+    "\n",
+    "# how likely are we to test positive and be sick\n",
+    "pos_sick_likelihood = p_2positive_sick \n",
+    "\n",
+    "# Add normalization\n",
+    "pos_norm = p_2positive\n",
+    "\n",
+    "prob_youre_sick = find_posterior(sick_prior, pos_sick_likelihood, pos_norm)\n",
+    "\n",
+    "print(f'You have a {prob_youre_sick*100:.2f}% chance of actually being sick')"
+   ]
+  },
+  {
+   "cell_type": "code",
+   "execution_count": null,
+   "metadata": {},
+   "outputs": [],
+   "source": []
+  }
+ ],
+ "metadata": {
+  "celltoolbar": "Slideshow",
+  "kernelspec": {
+   "display_name": "Python 3 (ipykernel)",
+   "language": "python",
+   "name": "python3"
+  },
+  "language_info": {
+   "codemirror_mode": {
+    "name": "ipython",
+    "version": 3
+   },
+   "file_extension": ".py",
+   "mimetype": "text/x-python",
+   "name": "python",
+   "nbconvert_exporter": "python",
+   "pygments_lexer": "ipython3",
+   "version": "3.9.7"
+  },
+  "toc": {
+   "base_numbering": 1,
+   "nav_menu": {},
+   "number_sections": true,
+   "sideBar": true,
+   "skip_h1_title": false,
+   "title_cell": "Table of Contents",
+   "title_sidebar": "Contents",
+   "toc_cell": false,
+   "toc_position": {},
+   "toc_section_display": true,
+   "toc_window_display": false
+  }
+ },
+ "nbformat": 4,
+ "nbformat_minor": 4
+}
